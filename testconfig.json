@@ -1,0 +1,21 @@
+{
+    "baseURL": "https://demo.opencart.com/",
+    "browser": "chrome",
+    "browserOptions": {
+    "headless": false
+    },
+    "timeouts": {
+      "defaultElementTimeout": 30000,
+      "defaultPageLoadTimeout": 60000,
+      "defaultTestTimeout": 300000
+    },
+    "reports": {
+      "format": "html",
+      "outputPath": "reports/"
+    },
+    "logs": {
+      "level": "info",
+      "outputPath": "logs/test-log.txt"
+    }
+  }
+  

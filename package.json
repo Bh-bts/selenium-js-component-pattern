@@ -1,0 +1,22 @@
+{
+  "name": "selenium-js-component-pattern",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "allure-mocha": "^3.0.0-beta.12",
+    "chai": "^5.1.1",
+    "dotenv": "^16.4.5",
+    "mocha": "^10.7.3",
+    "selenium-webdriver": "^4.24.0"
+  }
+}
