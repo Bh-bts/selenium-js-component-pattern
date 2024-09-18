@@ -1,4 +1,3 @@
-const { until } = require("selenium-webdriver");
 const ConfigFactory = require("./ConfigFactory");
 const SelectorType = require("./SelectorType");
 const ProcessUtil = require("./ProcessUtil");
