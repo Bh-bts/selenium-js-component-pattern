@@ -5,3 +5,5 @@ class AllPages {
         this.loginPage = new LoginPage(browser);
     }
 }
+
+module.exports = AllPages;
