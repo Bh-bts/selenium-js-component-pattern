@@ -6,6 +6,7 @@ class LoginPage extends BasePage {
 
     myAccountLink = '//li/div/a[@class="dropdown-toggle"]';
     loginLink = '//a[text()="Login"]';
+    verifyYouAreHumanText = '//h2[text()="Verifying you are human. This may take a few seconds."]';
 
     constructor(browser) {
         super(browser);
@@ -24,6 +25,7 @@ class LoginPage extends BasePage {
 
     async clickOnMyAccountLink() {
         await this.getMyAccountLink().click();
+        await this.browser.waitForElementInvisible(this.verifyYouAreHumanText);
     }
 
     getLoginLink() {
@@ -33,8 +35,6 @@ class LoginPage extends BasePage {
     async clickOnLoginLink() {
         await this.getLoginLink().click();
     }
-
-
 }
 
 module.exports = LoginPage;

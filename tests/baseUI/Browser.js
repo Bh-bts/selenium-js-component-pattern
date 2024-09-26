@@ -42,8 +42,39 @@ class Browser {
      */
     async waitForElementVisibleXpath(selector, timeout = 5000) {
         const waitTimeout = timeout || this.testConfig.defaultElementTimeout
-        const element = await this.driver.wait(until.elementIsVisible(await this.driver.findElement(By.xpath(selector))), waitTimeout)
-        return element
+        const element = await this.driver.wait(until.elementIsVisible(await this.driver.findElement(By.xpath(selector))), waitTimeout);
+        return element;
+    }
+
+    /**
+     * Waits for the element to become Invisible.
+     * @param {string} selector - Xpath selector for the element.
+     * @param {number} timeout - Timeout in milliseconds (optional).
+     * @returns {WebElement} - The Invisible element.
+     */
+    async waitForElementInvisible(selector, timeout = 5000) {
+        const waitTimeout = timeout || this.testConfig.defaultElementTimeout;
+        try {
+            const element = await this.driver.findElement(By.xpath(selector));
+
+            await this.driver.wait(async () => {
+                try {
+                    // Check if the element is not displayed (i.e., invisible)
+                    const isDisplayed = await element.isDisplayed();
+                    return !isDisplayed; // Wait until it returns false (element is not visible)
+                } catch (error) {
+                    // If element is not found or stale (removed from DOM), consider it as invisible
+                    if (error.name === 'StaleElementReferenceError' || error.name === 'NoSuchElementError') {
+                        return true; // Treat as invisible since it's not in the DOM
+                    }
+                    throw error; // Re-throw other unexpected errors
+                }
+            }, waitTimeout);
+        } catch (error) {
+            console.error('Error waiting for element to become invisible:', error);
+            throw error;
+        }
+
     }
 
     /**
