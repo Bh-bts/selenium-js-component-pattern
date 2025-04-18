@@ -2,10 +2,13 @@ const BrowserFactory = require("../baseUI/BrowserFactory");
 const AllPages = require('../pages/AllPages');
 const testConfig = require('../../testconfig.json')
 const browser = testConfig.browser
+const addContext = require('mochawesome/addContext');
 
 describe(`Opencart tests ${browser}`, function () {
     let appUrl;
     let allPages;
+
+    this.timeout(30000);
 
     const openBrowser = async function () {
         this.browser = await BrowserFactory.createBrowser(this);
@@ -31,6 +34,12 @@ describe(`Opencart tests ${browser}`, function () {
         it("Goto Login page", async function () {
             await allPages.loginPage.goToLoginPage();
 
+            await allPages.loginPage.clickOnMyAccountLink();
+            await allPages.loginPage.getMyAccountLink().click();
+            await allPages.loginPage.clickOnLoginLink();
         })
+
+        after(closeBrower);
     })
+
 })

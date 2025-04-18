@@ -1,11 +1,13 @@
 const Button = require('./../baseUI/Components/Button');
 const BasePage = require("./BasePage");
 const SelectorType = require("../baseUI/SelectorType");
+const TextInput = require('../baseUI/Components/TextInput');
 
 class LoginPage extends BasePage {
 
-    myAccountLink = '//li/div/a[@class="dropdown-toggle"]';
-    loginLink = '//a[text()="Login"]';
+    userName = '//input[@name="username"]';
+    passWord = '//input[@type="password"]';
+    submitButton = '//button[@type="submit"]';
 
     constructor(browser) {
         super(browser);
@@ -18,12 +20,13 @@ class LoginPage extends BasePage {
         await this.browser.waitUntilPageIsLoaded();
     }
 
-    getMyAccountLink() {
-        return new Button(this.browser, SelectorType.XPATH, this.myAccountLink);
+    getUserName() {
+        return new TextInput(this.browser, SelectorType.XPATH, this.myAccountLink);
     }
 
-    async clickOnMyAccountLink() {
-        await this.getMyAccountLink().click();
+    async sendTextOnUsername() {
+        await this.getUserName().fastType()
+        await this.browser.waitForElementInvisible(this.verifyYouAreHumanText);
     }
 
     getLoginLink() {
@@ -33,8 +36,6 @@ class LoginPage extends BasePage {
     async clickOnLoginLink() {
         await this.getLoginLink().click();
     }
-
-
 }
 
 module.exports = LoginPage;
