@@ -4,7 +4,7 @@ const testConfig = require('../../testconfig.json')
 const browser = testConfig.browser
 const addContext = require('mochawesome/addContext');
 
-describe(`Opencart tests ${browser}`, function () {
+describe(`Mypustak tests ${browser}`, function () {
     let appUrl;
     let allPages;
 
@@ -12,12 +12,12 @@ describe(`Opencart tests ${browser}`, function () {
 
     const openBrowser = async function () {
         this.browser = await BrowserFactory.createBrowser(this);
-        appUrl = this.browser.getOpencartBaseUrl();
+        appUrl = this.browser.getMypustakBaseUrl();
         allPages = new AllPages(this.browser);
     }
 
-    const closeBrower = async function () {
-        if (this.currentTest.state == 'failed') {
+    const closeBrowser = async function () {
+        if (this.currentTest.state === 'failed') {
             const screenshot = await this.browser.captureScreenshot()
             addContext(this, {
                 title: this.currentTest.title,
@@ -28,7 +28,7 @@ describe(`Opencart tests ${browser}`, function () {
         await this.browser.close();
     }
 
-    describe("Verify user can able to login to opencart website", function () {
+    describe("Verify user can able to login to mypustak website", function () {
         before(openBrowser);
 
         it("Goto Login page", async function () {
@@ -39,7 +39,7 @@ describe(`Opencart tests ${browser}`, function () {
             await allPages.loginPage.clickOnLoginLink();
         })
 
-        after(closeBrower);
+        after(closeBrowser);
     })
 
 })

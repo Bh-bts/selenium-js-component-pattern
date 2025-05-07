@@ -64,7 +64,7 @@ class FileUtil {
 
     /**
      * Reads a JSON file from the given file path.
-     * @param {string} filepath - The path of the JSON file to read.
+     * @param {string} filePath - The path of the JSON file to read.
      * @return {object} - The parsed contents of the JSON file.
      */
     static readJsonFile(filePath) {

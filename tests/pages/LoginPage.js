@@ -5,6 +5,7 @@ const TextInput = require('../baseUI/Components/TextInput');
 
 class LoginPage extends BasePage {
 
+    login = '//button[@id="loginBtn"]';
     userName = '//input[@name="username"]';
     passWord = '//input[@type="password"]';
     submitButton = '//button[@type="submit"]';
@@ -12,12 +13,20 @@ class LoginPage extends BasePage {
     constructor(browser) {
         super(browser);
         this.browser = browser;
-        this.url = browser.getOpencartBaseUrl();
+        this.url = browser.getMypustakBaseUrl();
     }
 
     async goToLoginPage() {
         await super.goTo(this.url);
         await this.browser.waitUntilPageIsLoaded();
+    }
+
+    getLoginButton(){
+        return new Button(this.browser, SelectorType.XPATH, this.login)
+    }
+
+    async clickLoginButton(){
+        await this.getLoginButton().click()
     }
 
     getUserName() {

@@ -30,8 +30,7 @@ class Browser {
      */
     async waitForElementVisible(selector, timeout = 5000) {
         const waitTimeout = timeout || this.testConfig.defaultElementTimeout;
-        const element = await this.driver.wait(until.elementIsVisible(await this.driver.findElement(By.css(selector))), waitTimeout);
-        return element;
+        return await this.driver.wait(until.elementIsVisible(await this.driver.findElement(By.css(selector))), waitTimeout);
     }
 
     /**
@@ -42,8 +41,7 @@ class Browser {
      */
     async waitForElementVisibleXpath(selector, timeout = 5000) {
         const waitTimeout = timeout || this.testConfig.defaultElementTimeout
-        const element = await this.driver.wait(until.elementIsVisible(await this.driver.findElement(By.xpath(selector))), waitTimeout);
-        return element;
+        return await this.driver.wait(until.elementIsVisible(await this.driver.findElement(By.xpath(selector))), waitTimeout);
     }
 
     /**
@@ -94,10 +92,10 @@ class Browser {
     }
 
     /**
-     * Get the Opencart application URL.
-     * @returns {string} - The Opencart application URL.
+     * Get the Mypustak application URL.
+     * @returns {string} - The Mypustak application URL.
      */
-    getOpencartBaseUrl() {
+    getMypustakBaseUrl() {
         return this.testConfig.baseURL;
     }
 
@@ -295,12 +293,13 @@ class Browser {
     }
 
     /**
-    * Enter text into a text field element.
-    * @param {string} selectorType - The selector type (CSS or XPath).
-    * @param {string} locator - The locator value.
-    * @param {string} text - The text to enter.
-    * @returns {WebElement} - The text field element.
-    */
+     * Enter text into a text field element.
+     * @param {string} selectorType - The selector type (CSS or XPath).
+     * @param {string} locator - The locator value.
+     * @param {string} text - The text to enter.
+     * @param clear
+     * @returns {WebElement} - The text field element.
+     */
     async sendKeys(selectorType, locator, text, clear = true) {
         const element = await this.findBySelectorType(selectorType, locator);
         await this.waitUntilElementEnabled(element);
@@ -358,8 +357,7 @@ class Browser {
      */
     async getText(selectorType, locator) {
         const element = await this.findBySelectorType(selectorType, locator);
-        const result = await element.getText();
-        return result;
+        return await element.getText();
     }
 
     /**
@@ -375,7 +373,7 @@ class Browser {
 
         for (const option of options) {
             const optionText = await option.getText();
-            if (optionText == text) {
+            if (optionText === text) {
                 await option.click();
                 return;
             }
@@ -492,13 +490,6 @@ class Browser {
     }
 
     /**
-     * Clear the main window handler.
-     */
-    clearMainWindowHandler() {
-        this.mainWindowHandler = "";
-    }
-
-    /**
      * Switch to an iframe.
      * @param {string} selectorType - The selector type for the iframe element.
      * @param {string} locator - The locator for the iframe element.
@@ -541,8 +532,7 @@ class Browser {
      * @returns {*} - The output of the JavaScript execution.
      */
     async executeJavaScript(javaScript, args) {
-        const jsOutput = await this.driver.executeScript(javaScript, args);
-        return jsOutput;
+        return await this.driver.executeScript(javaScript, args);
     }
 
     /**
@@ -590,7 +580,7 @@ class Browser {
      */
     async dynamicWaitForElement(selectorType, locator, waitTimeForElement, intervalTime) {
         while (!(await this.isVisible(selectorType, locator))) {
-            this.delay(intervalTime);
+            await this.delay(intervalTime);
             waitTimeForElement -= intervalTime;
             if (waitTimeForElement < 1) break;
         }

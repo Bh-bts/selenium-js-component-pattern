@@ -37,8 +37,7 @@ class WebComponent {
     async isAvailableAndDisplayed(withinSeconds) {
         try {
             const element = await this.findElementOrFailStep(withinSeconds);
-            const isElementDisplayed = await element.isDisplayed();
-            return isElementDisplayed;
+            return await element.isDisplayed();
         } catch (error) {
             console.log(`Element '${this.selectorType}': '${this.locator}' is not found within: ${withinSeconds}. Timeout error occurred! \n${e} `);
             return false;

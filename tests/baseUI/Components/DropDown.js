@@ -1,4 +1,6 @@
-class DropDown {
+const WebComponent = require("./WebComponent");
+
+class DropDown extends WebComponent{
     constructor(browser, selectorType, locator) {
         super(browser, selectorType, locator);
     }

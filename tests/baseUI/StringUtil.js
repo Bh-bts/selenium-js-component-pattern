@@ -11,7 +11,7 @@ class StringUtil {
     /**
      * Removes one or more characters from the end of a string.
      * @param {string} text - The string to trim.
-     * @param {string} textTOTrim - The characters to remove from the end of the string.
+     * @param {string} textToTrim - The characters to remove from the end of the string.
      * @return {string} - The trimmed string.
      */
     static trimEnd(text, textToTrim) {

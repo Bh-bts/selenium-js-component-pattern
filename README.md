@@ -64,7 +64,7 @@ javascript-selenium-framework/
 │   │   ├── BasePage.js
 │   │   └── LoginPage.js
 │   └── specs/
-│       └── opencart.spec.js              # Sample test script
+│       └── login.spec.js              # Sample test script
 ├── .gitignore
 ├── README.md
 
