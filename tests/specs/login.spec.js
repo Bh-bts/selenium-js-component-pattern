@@ -4,7 +4,8 @@ const testConfig = require('../../testconfig.json')
 const browser = testConfig.browser
 const addContext = require('mochawesome/addContext');
 const logger = require('../baseUI/Logger');
-const assert = require('assert');
+const assert = require('../utils/AssertUtil')
+const ScreenshotUtil = require('../utils/ScreenshotUtil');
 require('dotenv').config();
 
 describe(`Mypustak tests ${browser}`, function () {
@@ -46,7 +47,13 @@ describe(`Mypustak tests ${browser}`, function () {
 
             const actualText = await allPages.loginPage.getLoginButtonText();
             logger.info(`Validating login button text. Expected: 'Hi! Reader', Actual: '${actualText}'`);
-            assert.strictEqual(actualText, "Hi! Reader", `Expected login button text to be 'Hi! Reader' but got '${actualText}`);
+            assert.assertEqual(actualText, "Hi! Reader", `Expected login button text to be 'Hi! Reader' but got '${actualText}`);
+        });
+
+        afterEach(async function () {
+            if (this.currentTest.state === 'failed') {
+                await ScreenshotUtil.capture(this.browser, this.currentTest.title);
+            }
         });
 
         after(closeBrowser);

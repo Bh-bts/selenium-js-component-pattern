@@ -69,6 +69,7 @@ class LoginPage extends BasePage {
     }
 
     async clickPopUpLoginButton() {
+        logger.info('Clicking Login Button')
         await this.getPopUpLoginButton().click();
     }
 
