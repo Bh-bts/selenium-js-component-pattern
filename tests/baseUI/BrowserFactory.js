@@ -69,7 +69,7 @@ class BrowserFactory {
         logger.info("Creating Chrome driver...");
         const options = new Chrome.Options();
         if (isHeadless) {
-            options.headless()
+            options.addArguments('--headless');
             options.addArguments(
                 '--incognito',
                 '--disable-gpu',
@@ -97,7 +97,7 @@ class BrowserFactory {
         logger.info("Creating Firefox driver...");
         const options = new Firefox.Options();
         if (isHeadless) {
-            options.headless();
+            options.addArguments('--headless');
             options.addArguments(
                 '--test-type',
                 '--incognito',

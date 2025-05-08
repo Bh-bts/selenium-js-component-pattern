@@ -2,7 +2,7 @@
     "baseURL": "https://www.mypustak.com/",
     "browser": "chrome",
     "browserOptions": {
-      "headless": false
+      "headless": true
     },
     "timeouts": {
       "defaultElementTimeout": 30000,
