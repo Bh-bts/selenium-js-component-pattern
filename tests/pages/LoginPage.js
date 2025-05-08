@@ -2,13 +2,15 @@ const Button = require('./../baseUI/Components/Button');
 const BasePage = require("./BasePage");
 const SelectorType = require("../baseUI/SelectorType");
 const TextInput = require('../baseUI/Components/TextInput');
+const logger = require('../baseUI/Logger');
 
 class LoginPage extends BasePage {
 
     login = '//button[@id="loginBtn"]';
-    userName = '//input[@name="username"]';
-    passWord = '//input[@type="password"]';
-    submitButton = '//button[@type="submit"]';
+    email = '//input[@id=":r2:"]';
+    passWord = '//input[@id=":rr:"]';
+    proceedButton = '//button[text()="Proceed"]';
+    popUpLoginButton = '//form/button[text()="Login"]';
 
     constructor(browser) {
         super(browser);
@@ -17,34 +19,59 @@ class LoginPage extends BasePage {
     }
 
     async goToLoginPage() {
+        logger.info("Navigating to login page");
         await super.goTo(this.url);
         await this.browser.waitUntilPageIsLoaded();
     }
 
     getLoginButton(){
-        return new Button(this.browser, SelectorType.XPATH, this.login)
+        return new Button(this.browser, SelectorType.XPATH, this.login);
     }
 
     async clickLoginButton(){
-        await this.getLoginButton().click()
+        logger.info("Clicking login button");
+        await this.getLoginButton().click();
     }
 
-    getUserName() {
-        return new TextInput(this.browser, SelectorType.XPATH, this.myAccountLink);
+    async getLoginButtonText() {
+        return await this.getLoginButton().getText();
     }
 
-    async sendTextOnUsername() {
-        await this.getUserName().fastType()
-        await this.browser.waitForElementInvisible(this.verifyYouAreHumanText);
+    getEmail() {
+        return new TextInput(this.browser, SelectorType.XPATH, this.email);
     }
 
-    getLoginLink() {
-        return new Button(this.browser, SelectorType.XPATH, this.loginLink);
+    async sendTextOnEmail(email) {
+        logger.info("Entering email...");
+        await this.getEmail().slowType(email);
     }
 
-    async clickOnLoginLink() {
-        await this.getLoginLink().click();
+    getPassword() {
+        return new TextInput(this.browser, SelectorType.XPATH, this.passWord);
     }
+
+    async sendTextOnPassword(password) {
+        logger.info("Entering password...");
+        await this.getPassword().slowType(password);
+    }
+
+    getSubmitButton() {
+        return new Button(this.browser, SelectorType.XPATH, this.proceedButton);
+    }
+
+    async clickProceedButton() {
+        logger.info("Clicking Proceed...");
+        await this.getSubmitButton().click();
+    }
+
+    getPopUpLoginButton() {
+        return new Button(this.browser, SelectorType.XPATH, this.popUpLoginButton);
+    }
+
+    async clickPopUpLoginButton() {
+        await this.getPopUpLoginButton().click();
+    }
+
 }
 
 module.exports = LoginPage;

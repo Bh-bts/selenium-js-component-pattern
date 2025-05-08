@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const StringUtil = require("./StringUtil");
+const logger = require("./Logger");
 
 class FileUtil {
 
@@ -81,7 +82,7 @@ class FileUtil {
     static async createFile(filePath, fileContent) {
         await fs.writeFileSync(filePath, fileContent, function (err) {
             if (err) throw error;
-            console.log(`File created ${filePath} and page source saved...!`);
+            logger.info(`File created ${filePath} and page source saved...!`);
         });
     }
 }

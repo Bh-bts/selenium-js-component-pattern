@@ -1,3 +1,5 @@
+const logger = require('../../baseUI/Logger');
+
 class WebComponent {
     constructor(browser, selectorType, locator) {
         this.browser = browser;
@@ -10,7 +12,7 @@ class WebComponent {
             await this.browser.scrollIntoView(this.selectorType, this.locator);
             await this.browser.click(this.selectorType, this.locator)
         } catch (error) {
-            console.log("Error is: " + error);
+            logger.info("Error is: " + error);
             await this.browser.clickJs(this.selectorType, this.locator);
         }
     }
@@ -39,7 +41,7 @@ class WebComponent {
             const element = await this.findElementOrFailStep(withinSeconds);
             return await element.isDisplayed();
         } catch (error) {
-            console.log(`Element '${this.selectorType}': '${this.locator}' is not found within: ${withinSeconds}. Timeout error occurred! \n${e} `);
+            logger.info(`Element '${this.selectorType}': '${this.locator}' is not found within: ${withinSeconds}. Timeout error occurred! \n${e} `);
             return false;
         }
     }
@@ -47,7 +49,7 @@ class WebComponent {
     async isDisplayedOnView(withinSeconds) {
         const element = await this.findElementOrFailStep(withinSeconds);
         const isElementVisible = await element.isElementVisibleOnView(element);
-        console.info(`isElementVisibleOnView: For element '${this.selectorType}': '${this.locator}' is '${isElementVisible}'!`);
+        logger.info(`isElementVisibleOnView: For element '${this.selectorType}': '${this.locator}' is '${isElementVisible}'!`);
         return isElementVisible;
     }
 

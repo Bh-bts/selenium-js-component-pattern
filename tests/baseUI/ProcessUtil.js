@@ -1,3 +1,5 @@
+const logger = require('../baseUI/Logger');
+
 class ProcessUtil {
     /**
      * Creates and returns a rejected Promise with an error message.
@@ -5,7 +7,7 @@ class ProcessUtil {
      * @return {Promise} - A rejected Promise with an Error object containing the specified error message.
      */
     static async returnPromiseError(errorMessage) {
-        console.log(errorMessage);
+        logger.info(errorMessage);
 
         return new Promise(function (resolve, reject) {
             reject(new Error(errorMessage));
@@ -18,7 +20,7 @@ class ProcessUtil {
      * @return {Promise} A rejected Promise with the error object as the reason.
      */
      static async errorToPromiseError(error) {
-        console.log(error.toString());
+        logger.info(error.toString());
 
         return new Promise(function (resolve, reject) {
             reject(error);

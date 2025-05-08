@@ -2,6 +2,7 @@ const ConfigFactory = require("./ConfigFactory");
 const SelectorType = require("./SelectorType");
 const ProcessUtil = require("./ProcessUtil");
 const { until, By, WebElement, Key } = require("selenium-webdriver");
+const logger = require('../baseUI/Logger');
 
 class Browser {
     mainWindowHandler = "";
@@ -69,7 +70,7 @@ class Browser {
                 }
             }, waitTimeout);
         } catch (error) {
-            console.error('Error waiting for element to become invisible:', error);
+            logger.error('Error waiting for element to become invisible:', error);
             throw error;
         }
 
@@ -428,7 +429,7 @@ class Browser {
             const screenshot = await this.driver.takeScreenshot();
             return `data:image/png;base64,${screenshot}`;
         } catch (error) {
-            console.error('Error capturing screenshot: ', error);
+            logger.error('Error capturing screenshot: ', error);
         }
     }
 
@@ -485,7 +486,7 @@ class Browser {
             await this.driver.getCurrentUrl();
             await this.driver.close();
         } catch (e) {
-            console.info("[Error while closing browser tab!]", e);
+            logger.info("[Error while closing browser tab!]", e);
         }
     }
 
@@ -501,7 +502,7 @@ class Browser {
 
         const element = await this.findBySelectorType(selectorType, locator);
         if (element.length > 1) {
-            console.warn("WARNING: More than 1 iframes are found. Please fix the locator.");
+            logger.warn("WARNING: More than 1 iframes are found. Please fix the locator.");
         }
         await this.waitUntilElementEnabled(element);
         await this.driver.switchTo().frame(element);
@@ -598,7 +599,7 @@ class Browser {
             const el = await this.findBySelectorType(selectorType, locator);
             return !!(await el.isDisplayed());
         } catch (err) {
-            console.error(err);
+            logger.error(err);
             throw new Error(`element is not visible: ${err}`);
         }
     }
