@@ -10,7 +10,7 @@ const logger = require('../baseUI/Logger')
  */
 
 class ScreenshotUtil {
-    static screenshotDir = path.join(__dirname, '..', 'screenshots');
+    static screenshotDir = path.join(process.cwd(), 'screenshots');
     static isCleared = false; // Track if already cleared
 
     static async capture(browser, testTitle = "UnknownTest") {
