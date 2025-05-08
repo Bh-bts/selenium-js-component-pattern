@@ -2,6 +2,7 @@ const ConfigFactory = require("./ConfigFactory");
 const SelectorType = require("./SelectorType");
 const ProcessUtil = require("./ProcessUtil");
 const { until, By, WebElement, Key } = require("selenium-webdriver");
+const logger = require('../baseUI/Logger');
 
 class Browser {
     mainWindowHandler = "";
@@ -30,8 +31,7 @@ class Browser {
      */
     async waitForElementVisible(selector, timeout = 5000) {
         const waitTimeout = timeout || this.testConfig.defaultElementTimeout;
-        const element = await this.driver.wait(until.elementIsVisible(await this.driver.findElement(By.css(selector))), waitTimeout);
-        return element;
+        return await this.driver.wait(until.elementIsVisible(await this.driver.findElement(By.css(selector))), waitTimeout);
     }
 
     /**
@@ -42,8 +42,7 @@ class Browser {
      */
     async waitForElementVisibleXpath(selector, timeout = 5000) {
         const waitTimeout = timeout || this.testConfig.defaultElementTimeout
-        const element = await this.driver.wait(until.elementIsVisible(await this.driver.findElement(By.xpath(selector))), waitTimeout);
-        return element;
+        return await this.driver.wait(until.elementIsVisible(await this.driver.findElement(By.xpath(selector))), waitTimeout);
     }
 
     /**
@@ -71,7 +70,7 @@ class Browser {
                 }
             }, waitTimeout);
         } catch (error) {
-            console.error('Error waiting for element to become invisible:', error);
+            logger.error('Error waiting for element to become invisible:', error);
             throw error;
         }
 
@@ -94,10 +93,10 @@ class Browser {
     }
 
     /**
-     * Get the Opencart application URL.
-     * @returns {string} - The Opencart application URL.
+     * Get the Mypustak application URL.
+     * @returns {string} - The Mypustak application URL.
      */
-    getOpencartBaseUrl() {
+    getMypustakBaseUrl() {
         return this.testConfig.baseURL;
     }
 
@@ -295,12 +294,13 @@ class Browser {
     }
 
     /**
-    * Enter text into a text field element.
-    * @param {string} selectorType - The selector type (CSS or XPath).
-    * @param {string} locator - The locator value.
-    * @param {string} text - The text to enter.
-    * @returns {WebElement} - The text field element.
-    */
+     * Enter text into a text field element.
+     * @param {string} selectorType - The selector type (CSS or XPath).
+     * @param {string} locator - The locator value.
+     * @param {string} text - The text to enter.
+     * @param clear
+     * @returns {WebElement} - The text field element.
+     */
     async sendKeys(selectorType, locator, text, clear = true) {
         const element = await this.findBySelectorType(selectorType, locator);
         await this.waitUntilElementEnabled(element);
@@ -358,8 +358,7 @@ class Browser {
      */
     async getText(selectorType, locator) {
         const element = await this.findBySelectorType(selectorType, locator);
-        const result = await element.getText();
-        return result;
+        return await element.getText();
     }
 
     /**
@@ -375,7 +374,7 @@ class Browser {
 
         for (const option of options) {
             const optionText = await option.getText();
-            if (optionText == text) {
+            if (optionText === text) {
                 await option.click();
                 return;
             }
@@ -430,7 +429,7 @@ class Browser {
             const screenshot = await this.driver.takeScreenshot();
             return `data:image/png;base64,${screenshot}`;
         } catch (error) {
-            console.error('Error capturing screenshot: ', error);
+            logger.error('Error capturing screenshot: ', error);
         }
     }
 
@@ -487,15 +486,8 @@ class Browser {
             await this.driver.getCurrentUrl();
             await this.driver.close();
         } catch (e) {
-            console.info("[Error while closing browser tab!]", e);
+            logger.info("[Error while closing browser tab!]", e);
         }
-    }
-
-    /**
-     * Clear the main window handler.
-     */
-    clearMainWindowHandler() {
-        this.mainWindowHandler = "";
     }
 
     /**
@@ -510,7 +502,7 @@ class Browser {
 
         const element = await this.findBySelectorType(selectorType, locator);
         if (element.length > 1) {
-            console.warn("WARNING: More than 1 iframes are found. Please fix the locator.");
+            logger.warn("WARNING: More than 1 iframes are found. Please fix the locator.");
         }
         await this.waitUntilElementEnabled(element);
         await this.driver.switchTo().frame(element);
@@ -541,8 +533,7 @@ class Browser {
      * @returns {*} - The output of the JavaScript execution.
      */
     async executeJavaScript(javaScript, args) {
-        const jsOutput = await this.driver.executeScript(javaScript, args);
-        return jsOutput;
+        return await this.driver.executeScript(javaScript, args);
     }
 
     /**
@@ -590,7 +581,7 @@ class Browser {
      */
     async dynamicWaitForElement(selectorType, locator, waitTimeForElement, intervalTime) {
         while (!(await this.isVisible(selectorType, locator))) {
-            this.delay(intervalTime);
+            await this.delay(intervalTime);
             waitTimeForElement -= intervalTime;
             if (waitTimeForElement < 1) break;
         }
@@ -608,7 +599,7 @@ class Browser {
             const el = await this.findBySelectorType(selectorType, locator);
             return !!(await el.isDisplayed());
         } catch (err) {
-            console.error(err);
+            logger.error(err);
             throw new Error(`element is not visible: ${err}`);
         }
     }

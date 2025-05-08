@@ -1,8 +1,8 @@
 const WebComponent = require("./WebComponent");
 
 class TexView extends WebComponent {
-    constructor(brower, selectorType, locator) {
-        super(brower, selectorType, locator)
+    constructor(browser, selectorType, locator) {
+        super(browser, selectorType, locator)
     }
 
     async getText() {

@@ -10,20 +10,24 @@ class TestConfig {
     reportOutputPath;         // Path where the reports are stored
     logLevel;                 // Level of logging
     logOutputPath;            // Path where the log file is stored
+    browserStackEnabled;
+    browserOptions;
 
     // Constructor
     constructor() {
         // Set default values for the properties
-        this.baseURL = "https://demo.opencart.com/";
+        this.baseURL = "https://www.mypustak.com/";
         this.browser = "chrome";
         this.headless = false;
-        this.defaultElementTimeout = 30000
-        this.defaultPageLoadTimeout = 60000
-        this.defaultTestTimeout = 300000
+        this.defaultElementTimeout = 30000;
+        this.defaultPageLoadTimeout = 60000;
+        this.defaultTestTimeout = 300000;
         this.reportFormat = "html";
         this.reportOutputPath = "reports/";
         this.logLevel = "info";
         this.logOutputPath = "logs/test-log.txt";
+        this.browserStackEnabled = false;
+        this.browserOptions = {headless:this.headless};
     }
 }
 

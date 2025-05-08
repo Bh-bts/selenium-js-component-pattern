@@ -9,6 +9,7 @@ const { Builder, Capabilities } = require("selenium-webdriver");
 const Firefox = require("selenium-webdriver/firefox.js")
 const edge = require("@microsoft/edge-selenium-tools");
 const { Capability } = require("selenium-webdriver/lib/capabilities");
+const logger = require('./Logger');
 
 class BrowserFactory {
     /**
@@ -19,7 +20,7 @@ class BrowserFactory {
      */
     static async createBrowser(mochaContext) {
         this.config = await ConfigFactory.getConfig();
-        const driver = await this.createDriverFromBrowserType(this.config.browser, this.config.isHeadless, this.config.browserStackEnabled)
+        const driver = await this.createDriverFromBrowserType(this.config.browser, this.config.browserOptions?.headless || false, this.config.browserStackEnabled)
         return new Browser(mochaContext, driver)
     }
 
@@ -32,7 +33,7 @@ class BrowserFactory {
      * @return {WebDriver} The created WebDriver instance.
      */
     static async createDriverFromBrowserType(browserType, isHeadless, browserStackEnabled) {
-        console.info(`Creating the Driver from the given browser: ${browserType} with Headless mode: ${isHeadless} ${(browserStackEnabled) ? 'on BrowserStack' : ''}`);
+        logger.info(`Creating the Driver from the given browser: ${browserType} with Headless mode: ${isHeadless} ${(browserStackEnabled) ? 'on BrowserStack' : ''}`);
         if (browserStackEnabled) {
             return await this.createBrowserStackDriver(browserType);
         }
@@ -52,7 +53,7 @@ class BrowserFactory {
                 break;
             default:
                 const message = 'User has not selected any browser to run automation tests upon!'
-                console.log(message);
+                logger.info(message);
                 await ProcessUtil.returnPromiseError(message)
                 throw new Error(message)
         }
@@ -65,10 +66,10 @@ class BrowserFactory {
      * @return {Promise} A Promise that resolves to a Chrome driver instance
      */
     static async createChromeDriver(isHeadless) {
-        console.log("Creating chrome driver...");
+        logger.info("Creating Chrome driver...");
         const options = new Chrome.Options();
         if (isHeadless) {
-            options.headless()
+            options.addArguments('--headless');
             options.addArguments(
                 '--incognito',
                 '--disable-gpu',
@@ -83,6 +84,7 @@ class BrowserFactory {
             .setChromeOptions(options)
             .build();
         await driver.manage().window().maximize();
+        logger.info("Chrome driver launched successfully.");
         return driver;
     }
 
@@ -92,10 +94,10 @@ class BrowserFactory {
      * @return {WebDriver} - A WebDriver instance for Firefox.
      */
     static async createFirefoxDriver(isHeadless) {
-        console.log("Creating geckodriver...");
+        logger.info("Creating Firefox driver...");
         const options = new Firefox.Options();
         if (isHeadless) {
-            options.headless();
+            options.addArguments('--headless');
             options.addArguments(
                 '--test-type',
                 '--incognito',
@@ -108,11 +110,12 @@ class BrowserFactory {
             .setFirefoxOptions(options)
             .build();
         await driver.manage().window().maximize();
+        logger.info("Firefox driver launched successfully.");
         return driver;
     }
 
     static async createEdgeDriver(isHeadless) {
-        console.log("Creating Microsoft Edge driver on the local machine...");
+        logger.info("Creating Edge driver...");
         const options = new edge.Options().setEdgeChromium(true);
         if (isHeadless) {
             options.addArguments(
@@ -125,6 +128,7 @@ class BrowserFactory {
         }
         const driver = edge.Driver.createSession(options);
         await driver.manage().window().maximize();
+        logger.info("Edge driver launched successfully.");
         return driver;
     }
 
@@ -133,12 +137,13 @@ class BrowserFactory {
      *
      * @return {Promise} Promise object that resolves to the Safari driver instance
      */
-    static async createSafariDriver() {
-        console.log("Creating Safari driver...");
+    static async createSafariDriver(isHeadless) {
+        logger.info("Creating Safari driver...");
         const driver = await new Builder()
             .forBrowser("safari")
             .build();
         await driver.manage().window().maximize();
+        logger.info("Safari driver launched successfully.");
         return driver;
     }
 
@@ -148,7 +153,7 @@ class BrowserFactory {
      * @return {Promise} - A Promise that resolves to a WebDriver instance
      */
     static async createBrowserStackDriver(browserType) {
-        console.log("Creating Chrome driver on BrowserStack...");
+        logger.info("Creating Chrome driver on BrowserStack...");
         const USERNAME = process.env.BROWSERSTACK_USERNAME;
         const AUTOMATE_KEY = process.env.BROWSERSTACK_AUTOMATE_KEY;
         const browserstackURL = 'https://' + USERNAME + ':' + AUTOMATE_KEY + '@hub-cloud.browserstack.com/wd/hub';
@@ -164,6 +169,7 @@ class BrowserFactory {
         }
         const driver = await new Builder().usingServer(browserstackURL).withCapabilities(capabilities).build();
         await driver.manage().window().maximize();
+        logger.info("Chrome driver launched successfully on BrowserStack.");
         return driver;
     }
 }

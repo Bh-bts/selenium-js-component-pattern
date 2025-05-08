@@ -1,5 +1,6 @@
 const FileUtil = require("./FileUtil");
 const TestConfig = require("./TestConfig");
+const logger = require('../baseUI/Logger');
 
 class ConfigFactory {
   static config;
@@ -19,7 +20,7 @@ class ConfigFactory {
     );
 
     if (FileUtil.fileExists(filePath)) {
-      console.log(`Found config file at: ${filePath}`);
+      logger.info(`Found config file at: ${filePath}`);
       this.config = FileUtil.readJsonFile(filePath);
     } else {
       this.config = new TestConfig();
