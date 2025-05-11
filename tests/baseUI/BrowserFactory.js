@@ -2,14 +2,14 @@ require('geckodriver');
 require('chromedriver');
 require('dotenv').config();
 const Browser = require("./Browser");
-const ConfigFactory = require("./ConfigFactory");
-const ProcessUtil = require("./ProcessUtil");
+const ConfigFactory = require("../utils/ConfigFactory");
+const ProcessUtil = require("../utils/ProcessUtil");
 const Chrome = require("selenium-webdriver/chrome");
 const { Builder, Capabilities } = require("selenium-webdriver");
 const Firefox = require("selenium-webdriver/firefox.js")
 const edge = require("@microsoft/edge-selenium-tools");
 const { Capability } = require("selenium-webdriver/lib/capabilities");
-const logger = require('./Logger');
+const logger = require('../utils/Logger');
 
 class BrowserFactory {
     /**

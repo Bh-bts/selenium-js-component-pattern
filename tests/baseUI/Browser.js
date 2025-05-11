@@ -1,8 +1,8 @@
-const ConfigFactory = require("./ConfigFactory");
+const ConfigFactory = require("../utils/ConfigFactory");
 const SelectorType = require("./SelectorType");
-const ProcessUtil = require("./ProcessUtil");
+const ProcessUtil = require("../utils/ProcessUtil");
 const { until, By, WebElement, Key } = require("selenium-webdriver");
-const logger = require('../baseUI/Logger');
+const logger = require('../utils/Logger');
 
 class Browser {
     mainWindowHandler = "";
