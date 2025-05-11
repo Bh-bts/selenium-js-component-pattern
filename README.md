@@ -41,30 +41,34 @@ Folder Structure:
 javascript-selenium-framework/
 ├── .github/
 │   └── workflows/
-│       └── chrome-build.yml              # GitHub Actions CI workflow
+│       └── chrome-build.yml           # GitHub Actions CI workflow
 ├── tests/
 │   ├── baseUI/
 │   │   ├── Components/
-│   │   │   ├── Button.js
-│   │   │   ├── CheckBox.js
-│   │   │   ├── DropDown.js
-│   │   │   ├── TextInput.js
-│   │   │   ├── TextView.js
-│   │   │   └── WebComponent.js
-│   │   ├── Browser.js
-│   │   ├── BrowserFactory.js
-│   │   ├── ConfigFactory.js
-│   │   ├── FileUtil.js
-│   │   ├── ProcessUtil.js
-│   │   ├── SelectorType.js
-│   │   ├── StringUtil.js
-│   │   └── TestConfig.js
+│   │   │   ├── Button.js              # Button UI component
+│   │   │   ├── CheckBox.js            # Checkbox UI component
+│   │   │   ├── DropDown.js            # Dropdown UI component
+│   │   │   ├── TextInput.js           # Text input field
+│   │   │   ├── TextView.js            # Text display component
+│   │   │   └── WebComponent.js        # Base web component
+│   │   ├── Browser.js                 # WebDriver setup
+│   │   ├── BrowserFactory.js          # Browser factory logic
+│   │   ├── SelectorType.js            # Enum for selector strategies
 │   ├── pages/
-│   │   ├── AllPages.js
-│   │   ├── BasePage.js
-│   │   └── LoginPage.js
-│   └── specs/
-│       └── login.spec.js              # Sample test script
+│   │   ├── AllPages.js                # Central page object export
+│   │   ├── BasePage.js                # Base class for all pages
+│   │   └── LoginPage.js               # Page object for login screen
+│   ├── specs/
+│   │   └── login.spec.js              # Login test case
+│   └── utils/
+│       ├── AssertUtil.js              # Custom assertion helpers
+│       ├── ConfigFactory.js           # Loads test configurations
+│       ├── FileUtil.js                # File operation utilities
+│       ├── Logger.js                  # Logger setup and usage
+│       ├── ProcessUtil.js             # Process management helpers
+│       ├── ScreenshotUtil.js          # Screenshot capture utility
+│       ├── StringUtil.js              # String manipulation helpers
+│       └── TestConfig.js              # Test configuration constants
 ├── .gitignore
 ├── README.md
 

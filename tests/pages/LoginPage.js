@@ -2,7 +2,7 @@ const Button = require('./../baseUI/Components/Button');
 const BasePage = require("./BasePage");
 const SelectorType = require("../baseUI/SelectorType");
 const TextInput = require('../baseUI/Components/TextInput');
-const logger = require('../baseUI/Logger');
+const logger = require('../utils/Logger');
 
 class LoginPage extends BasePage {
 

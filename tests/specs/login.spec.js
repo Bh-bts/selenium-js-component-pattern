@@ -3,7 +3,7 @@ const AllPages = require('../pages/AllPages');
 const testConfig = require('../../testconfig.json')
 const browser = testConfig.browser
 const addContext = require('mochawesome/addContext');
-const logger = require('../baseUI/Logger');
+const logger = require('../utils/Logger');
 const assert = require('../utils/AssertUtil')
 const ScreenshotUtil = require('../utils/ScreenshotUtil');
 require('dotenv').config();

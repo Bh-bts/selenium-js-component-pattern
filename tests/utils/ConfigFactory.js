@@ -1,6 +1,6 @@
 const FileUtil = require("./FileUtil");
 const TestConfig = require("./TestConfig");
-const logger = require('../baseUI/Logger');
+const logger = require('./Logger');
 
 class ConfigFactory {
   static config;

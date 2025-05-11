@@ -1,4 +1,4 @@
-const logger = require('../../baseUI/Logger');
+const logger = require('../../utils/Logger');
 
 class WebComponent {
     constructor(browser, selectorType, locator) {

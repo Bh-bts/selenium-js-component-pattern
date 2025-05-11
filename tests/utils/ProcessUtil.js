@@ -1,4 +1,4 @@
-const logger = require('../baseUI/Logger');
+const logger = require('./Logger');
 
 class ProcessUtil {
     /**

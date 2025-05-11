@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const logger = require('../baseUI/Logger')
+const logger = require('./Logger')
 
 /**
  * @class ScreenshotUtil
