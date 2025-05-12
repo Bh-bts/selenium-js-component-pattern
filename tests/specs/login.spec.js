@@ -51,7 +51,7 @@ describe(`Mypustak tests ${browser}`, function () {
         });
 
         afterEach(async function () {
-            if (this.currentTest.state === 'failed') {
+            if (this.currentTest.state === 'failed1') {
                 await ScreenshotUtil.capture(this.browser, this.currentTest.title);
             }
         });
